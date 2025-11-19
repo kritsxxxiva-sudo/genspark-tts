@@ -1,0 +1,67 @@
+{
+  "name": "GenSpark TTS Config",
+  "version": "2.0.0",
+  "models": {
+    "v1": {
+      "name": "Standard Flow Matching",
+      "type": "flow_matching",
+      "description": "Standard flow matching TTS model",
+      "sampleRate": 24000,
+      "hopLength": 256,
+      "nFeats": 80,
+      "steps": 32,
+      "cfg": 2.0,
+      "languages": ["en", "th", "multilingual"]
+    },
+    "v2": {
+      "name": "IPA-Enhanced Flow Matching", 
+      "type": "flow_matching_ipa",
+      "description": "IPA-based flow matching for better pronunciation",
+      "sampleRate": 24000,
+      "hopLength": 256,
+      "nFeats": 80,
+      "steps": 32,
+      "cfg": 2.0,
+      "languages": ["en", "th", "ipa", "multilingual"],
+      "features": ["ipa", "enhanced_phonemes"]
+    }
+  },
+  "voices": {
+    "default": {
+      "name": "Default Voice",
+      "lang": "en",
+      "gender": "neutral",
+      "description": "Default neutral voice"
+    },
+    "male-1": {
+      "name": "Male Voice 1",
+      "lang": "en", 
+      "gender": "male",
+      "description": "Standard male voice"
+    },
+    "female-1": {
+      "name": "Female Voice 1",
+      "lang": "en",
+      "gender": "female", 
+      "description": "Standard female voice"
+    },
+    "thai-1": {
+      "name": "Thai Voice 1",
+      "lang": "th",
+      "gender": "neutral",
+      "description": "Thai language voice"
+    }
+  },
+  "settings": {
+    "maxTextLength": 5000,
+    "maxAudioDuration": 300,
+    "maxBatchSize": 10,
+    "supportedFormats": ["wav", "mp3", "flac"],
+    "maxFileSize": "50MB"
+  },
+  "api": {
+    "rateLimit": 100,
+    "timeout": 30000,
+    "maxConcurrentRequests": 5
+  }
+}
