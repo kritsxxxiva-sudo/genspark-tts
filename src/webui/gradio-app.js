@@ -213,13 +213,108 @@ class TTSWebUI {
       description="Train custom voice models using your audio dataset"
     );
     
+    // Trained Voice interface
+    const trainedVoiceApp = gr.Interface(
+      this.synthesizeWithTrainedVoice,
+      [
+        gr.Textbox(
+          label="Text to Synthesize",
+          placeholder="Enter text to synthesize with your trained voice...",
+          lines=3
+        ),
+        gr.Dropdown(
+          choices=['thai_voice_9c7bb60b'], // Will be populated with available trained voices
+          value='thai_voice_9c7bb60b',
+          label="Trained Voice Model"
+        ),
+        gr.Slider(
+          minimum=0.5,
+          maximum=2.0,
+          value=1.0,
+          step=0.1,
+          label="Speed"
+        ),
+        gr.Slider(
+          minimum=1,
+          maximum=64,
+          value=32,
+          step=1,
+          label="Steps (NFE)"
+        ),
+        gr.Slider(
+          minimum=1.0,
+          maximum=3.0,
+          value=2.0,
+          step=0.1,
+          label="CFG Scale"
+        )
+      ],
+      [
+        gr.Audio(
+          label="Generated Speech with Trained Voice",
+          type="numpy"
+        ),
+        gr.Textbox(
+          label="Generation Info",
+          lines=6
+        )
+      ],
+      title="Trained Voice Synthesis",
+      description="Use your trained custom voice models for text-to-speech synthesis",
+      examples=[
+        ["สวัสดีครับ นี่คือเสียงที่ฝึกมาใหม่", "thai_voice_9c7bb60b", 1.0, 32, 2.0],
+        ["Hello, this is my custom trained voice speaking!", "thai_voice_9c7bb60b", 1.0, 32, 2.0]
+      ]
+    );
+    
     // Combine interfaces
     this.interface = gr.TabbedInterface(
-      [app, multiSpeechApp, voiceCloneApp, voiceTrainApp],
-      ["Text-to-Speech", "Multi-Speech", "Voice Cloning", "Voice Training"]
+      [app, multiSpeechApp, voiceCloneApp, voiceTrainApp, trainedVoiceApp],
+      ["Text-to-Speech", "Multi-Speech", "Voice Cloning", "Voice Training", "Trained Voice"]
     );
     
     return this.interface;
+  }
+  
+  /**
+   * Synthesize speech using trained voice model
+   */
+  async synthesizeWithTrainedVoice(text, modelId, speed, steps, cfg) {
+    try {
+      console.log('Synthesizing with trained voice:', {
+        text: text.substring(0, 50) + '...',
+        modelId,
+        speed,
+        steps,
+        cfg
+      });
+      
+      // Use the trained voice model for synthesis
+      const result = await this.tts.synthesizeWithTrainedVoice({
+        text,
+        modelId,
+        speed,
+        steps,
+        cfg
+      });
+      
+      const info = `
+Trained Voice Model: ${modelId}
+Text: ${text.substring(0, 50)}${text.length > 50 ? '...' : ''}
+Speed: ${speed}
+Steps: ${steps}
+CFG: ${cfg}
+Duration: ${result.duration.toFixed(2)}s
+Processing Time: ${result.processingTime}ms
+Voice Characteristics: ${JSON.stringify(result.voiceCharacteristics || {}, null, 2)}
+      `.trim();
+      
+      return [result.audio, info];
+      
+    } catch (error) {
+      console.error('Trained voice synthesis error:', error);
+      throw new Error(`Failed to synthesize with trained voice: ${error.message}`);
+    }
   }
   
   /**

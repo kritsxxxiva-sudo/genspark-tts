@@ -185,6 +185,62 @@ class TTS extends EventEmitter {
   }
   
   /**
+   * Synthesize speech using trained voice model
+   */
+  async synthesizeWithTrainedVoice(options) {
+    const {
+      text,
+      modelId,
+      speed = this.options.speed,
+      steps = this.options.steps,
+      cfg = this.options.cfg,
+      emotion = 'neutral'
+    } = options;
+    
+    if (!text) {
+      throw new Error('Text is required for synthesis');
+    }
+    
+    if (!modelId) {
+      throw new Error('Model ID is required for trained voice synthesis');
+    }
+    
+    // Check if trained model exists
+    const trainedVoice = this.trainedVoices.get(modelId);
+    if (!trainedVoice) {
+      throw new Error(`Trained voice model ${modelId} not found`);
+    }
+    
+    console.log(`Synthesizing with trained voice: ${modelId}`);
+    console.log(`Text: "${text.substring(0, 50)}..."`);
+    
+    // Simulate synthesis with trained voice characteristics
+    const startTime = Date.now();
+    
+    // Generate audio using trained voice characteristics
+    const audioData = await this.generateAudioWithCharacteristics(
+      text, 
+      trainedVoice.characteristics, 
+      speed, 
+      emotion
+    );
+    
+    const endTime = Date.now();
+    const processingTime = endTime - startTime;
+    
+    console.log(`Trained voice synthesis completed in ${processingTime}ms`);
+    
+    return {
+      audio: audioData,
+      sampleRate: this.options.sampleRate,
+      duration: this.estimateDuration(text, speed),
+      voiceCharacteristics: trainedVoice.characteristics,
+      modelId: modelId,
+      processingTime
+    };
+  }
+  
+  /**
    * Clone voice from reference audio
    */
   async cloneVoice(options) {
