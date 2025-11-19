@@ -1,0 +1,13 @@
+{
+  "name": "genspark-tts",
+  "version": "1.0.0",
+  "description": "Text-to-speech project for GenSpark AI",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "keywords": ["tts", "text-to-speech", "ai", "genspark"],
+  "author": "kritsxxxiva-sudo",
+  "license": "MIT"
+}
