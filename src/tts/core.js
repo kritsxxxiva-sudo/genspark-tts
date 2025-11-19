@@ -1,5 +1,5 @@
 const EventEmitter = require('events');
-const { VoiceTrainer } = require('./voice-trainer');
+const VoiceTrainer = require('./voice-trainer');
 
 /**
  * Core TTS implementation inspired by F5-TTS-THAI

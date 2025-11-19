@@ -533,10 +533,10 @@ Validation Samples: ${model.metadata.validationSamples}
       });
       
       console.log('Creating Gradio interface...');
-      const interface = this.createInterface();
+      const gradioInterface = this.createInterface();
       
       console.log(`Launching web UI on port ${this.port}...`);
-      interface.launch({
+      gradioInterface.launch({
         server_port: this.port,
         server_name: "0.0.0.0",
         share: false,

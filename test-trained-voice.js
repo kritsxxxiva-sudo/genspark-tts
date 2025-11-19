@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { TTS } = require('./src/tts/core');
+const TTS = require('./src/tts/core');
 
 /**
  * Test trained voice synthesis
