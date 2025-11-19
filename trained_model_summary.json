@@ -1,0 +1,30 @@
+{
+  "id": "thai_voice_9c7bb60b",
+  "name": "thai_voice",
+  "createdAt": "2025-11-19T14:03:50.525Z",
+  "metadata": {
+    "trainingSamples": 32,
+    "validationSamples": 8,
+    "epochs": 75,
+    "finalLoss": 0.10309538296648055,
+    "validationLoss": 0.06662148478711655
+  },
+  "voiceCharacteristics": {
+    "avgPitch": 201.25,
+    "avgEnergy": 0.6000000000000001,
+    "avgDuration": 2.63125,
+    "emotionDistribution": {
+      "neutral": 0.34375,
+      "positive": 0.5,
+      "negative": 0.15625
+    },
+    "language": "th",
+    "sampleCount": 32
+  },
+  "trainingHistory": {
+    "epochs": 75,
+    "finalLoss": 0.10309538296648055,
+    "validationLoss": 0.06662148478711655,
+    "trainingTime": 7534
+  }
+}
